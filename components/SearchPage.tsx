@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/components/Logo";
@@ -13,6 +13,8 @@ type LegoSet = {
   set_img_url: string | null;
 };
 
+type Stats = { searches: number; saved: number } | null;
+
 const QUICK_SEARCHES = [
   { label: "Millennium Falcon", query: "75192" },
   { label: "Bugatti Chiron", query: "42083" },
@@ -20,11 +22,25 @@ const QUICK_SEARCHES = [
   { label: "Optimus Prime", query: "10302" },
 ];
 
+function formatNumber(n: number) {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return n.toLocaleString();
+}
+
 export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<LegoSet[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [stats, setStats] = useState<Stats>(null);
+
+  useEffect(() => {
+    fetch("/api/stats")
+      .then((r) => r.json())
+      .then(setStats)
+      .catch(() => {});
+  }, []);
 
   async function doSearch(q: string) {
     if (!q.trim()) return;
@@ -45,31 +61,35 @@ export default function SearchPage() {
   return (
     <div className="flex-1 flex flex-col">
       {!searched ? (
-        /* ── HERO ── */
         <div className="flex-1 flex flex-col items-center justify-center px-4 py-16 relative overflow-hidden">
-          {/* Warm glow behind heading */}
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-yellow-400/5 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col items-center text-center max-w-lg w-full">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 border border-yellow-400/30 bg-yellow-400/5 rounded-full px-4 py-1.5 mb-8 text-yellow-400 text-sm font-medium">
-              Find clones. Save up to 90%.
-            </div>
-
-            {/* Heading */}
             <div className="flex items-center justify-center gap-4 mb-4">
-              <Logo size={64} />
+              <Logo size={60} />
               <h1 className="text-5xl sm:text-6xl font-black tracking-tight leading-none">
-                <span className="text-white">Ali</span>
-                <span className="text-yellow-400"> vs </span>
-                <span className="text-white">LEGO</span>
+                Brick<span className="text-yellow-400">Deal</span>
               </h1>
             </div>
-            <p className="text-gray-400 text-base mb-10 max-w-sm leading-relaxed">
-              Search any LEGO set — see if a quality clone exists on AliExpress or Temu for a fraction of the price.
+            <p className="text-gray-400 text-base mb-3 max-w-sm leading-relaxed">
+              Search any LEGO® set — find compatible brick alternatives on AliExpress & Temu for up to 90% less.
             </p>
 
-            {/* Search box */}
+            {/* Live stats */}
+            {stats && (
+              <div className="flex gap-6 mb-8 mt-1">
+                <div className="text-center">
+                  <p className="text-xl font-black text-white">{formatNumber(stats.searches)}</p>
+                  <p className="text-xs text-gray-500">sets searched</p>
+                </div>
+                <div className="w-px bg-gray-800" />
+                <div className="text-center">
+                  <p className="text-xl font-black text-yellow-400">${formatNumber(stats.saved)}</p>
+                  <p className="text-xs text-gray-500">estimated saved</p>
+                </div>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="w-full flex gap-2 mb-6">
               <input
                 type="text"
@@ -88,7 +108,6 @@ export default function SearchPage() {
               </button>
             </form>
 
-            {/* Quick chips */}
             <div className="flex gap-2 flex-wrap justify-center">
               {QUICK_SEARCHES.map((s) => (
                 <button
@@ -103,9 +122,7 @@ export default function SearchPage() {
           </div>
         </div>
       ) : (
-        /* ── RESULTS ── */
         <div className="max-w-3xl mx-auto w-full px-4 py-8">
-          {/* Inline search bar */}
           <form onSubmit={handleSubmit} className="flex gap-2 mb-8">
             <input
               type="text"
@@ -114,16 +131,12 @@ export default function SearchPage() {
               placeholder="Search sets…"
               className="flex-1 bg-gray-900 border border-gray-700 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 rounded-xl px-4 py-3 text-white placeholder-gray-600 outline-none transition"
             />
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-5 py-3 rounded-xl transition disabled:opacity-50"
-            >
+            <button type="submit" disabled={loading}
+              className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-5 py-3 rounded-xl transition disabled:opacity-50">
               {loading ? "…" : "Search"}
             </button>
           </form>
 
-          {/* Skeleton */}
           {loading && (
             <div className="grid sm:grid-cols-2 gap-3">
               {[...Array(6)].map((_, i) => (
@@ -139,7 +152,6 @@ export default function SearchPage() {
             </div>
           )}
 
-          {/* Empty */}
           {!loading && results.length === 0 && (
             <div className="text-center py-24">
               <p className="text-5xl mb-4">🔍</p>
@@ -147,49 +159,35 @@ export default function SearchPage() {
             </div>
           )}
 
-          {/* Grid results */}
           {!loading && results.length > 0 && (
             <>
-              <p className="text-xs text-gray-600 mb-4 uppercase tracking-widest">
-                {results.length} results
-              </p>
+              <p className="text-xs text-gray-600 mb-4 uppercase tracking-widest">{results.length} results</p>
               <div className="grid sm:grid-cols-2 gap-3">
                 {results.map((set) => (
-                  <Link
-                    key={set.set_num}
-                    href={`/set/${set.set_num}`}
-                    className="card-hover group flex gap-4 bg-gray-900 border border-gray-800 hover:border-yellow-400/30 rounded-2xl p-4 items-center"
-                  >
-                    {/* Image */}
+                  <Link key={set.set_num} href={`/set/${set.set_num}`}
+                    className="card-hover group flex gap-4 bg-gray-900 border border-gray-800 hover:border-yellow-400/30 rounded-2xl p-4 items-center">
                     <div className="w-20 h-20 flex-shrink-0 bg-gray-800 rounded-xl overflow-hidden">
                       {set.set_img_url ? (
-                        <Image
-                          src={set.set_img_url}
-                          alt={set.name}
-                          width={80}
-                          height={80}
-                          className="object-contain w-full h-full p-1"
-                          unoptimized
-                        />
+                        <Image src={set.set_img_url} alt={set.name} width={80} height={80}
+                          className="object-contain w-full h-full p-1" unoptimized />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-2xl">🧱</div>
                       )}
                     </div>
-                    {/* Text */}
                     <div className="flex-1 min-w-0">
                       <p className="text-yellow-400/70 font-mono text-xs mb-0.5">{set.set_num}</p>
-                      <p className="font-semibold text-white group-hover:text-yellow-100 transition text-sm leading-snug line-clamp-2">
-                        {set.name}
-                      </p>
+                      <p className="font-semibold text-white group-hover:text-yellow-100 transition text-sm leading-snug line-clamp-2">{set.name}</p>
                       <p className="text-xs text-gray-500 mt-1">
-                        {set.year}
-                        {set.num_parts > 0 && ` · ${set.num_parts.toLocaleString()} pcs`}
+                        {set.year}{set.num_parts > 0 && ` · ${set.num_parts.toLocaleString()} pcs`}
                       </p>
                     </div>
                     <span className="text-gray-700 group-hover:text-yellow-400 transition flex-shrink-0 text-xl">›</span>
                   </Link>
                 ))}
               </div>
+              <p className="text-xs text-gray-700 mt-6 text-center">
+                Set images © The LEGO Group, via Rebrickable
+              </p>
             </>
           )}
         </div>

@@ -145,10 +145,10 @@ export default async function SetPage({
 
         {/* Clones */}
         <section className="mb-8">
-          <h2 className="text-xs uppercase tracking-widest text-gray-500 mb-3">Known Clones</h2>
+          <h2 className="text-xs uppercase tracking-widest text-gray-500 mb-3">Compatible Alternatives</h2>
           {clones.length === 0 ? (
             <div className="bg-gray-800 rounded-xl p-6 text-center text-gray-500 text-sm">
-              No known clones for this set yet
+              No compatible alternatives found for this set yet
             </div>
           ) : (
             <div className="flex flex-col gap-3">

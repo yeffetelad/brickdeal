@@ -20,6 +20,10 @@ const QUICK_SEARCHES = [
   { label: "Bugatti Chiron", query: "42083" },
   { label: "Titanic", query: "10294" },
   { label: "Optimus Prime", query: "10302" },
+  { label: "#75192", query: "75192" },
+  { label: "#42083", query: "42083" },
+  { label: "#10294", query: "10294" },
+  { label: "#21309", query: "21309" },
 ];
 
 function formatNumber(n: number) {
@@ -95,7 +99,7 @@ export default function SearchPage() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Set name or number…"
+                placeholder="Set name or number (e.g. Bugatti or 42083)…"
                 autoFocus
                 className="flex-1 bg-gray-900 border border-gray-700 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 rounded-2xl px-5 py-4 text-white placeholder-gray-600 outline-none transition text-base"
               />

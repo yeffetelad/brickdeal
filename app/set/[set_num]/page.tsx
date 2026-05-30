@@ -127,21 +127,47 @@ export default async function SetPage({
         </div>
 
         {/* Prices */}
-        <section className="mb-8">
-          <h2 className="text-xs uppercase tracking-widest text-gray-500 mb-3">Prices</h2>
-          <div className="grid grid-cols-2 gap-3">
-            <a href={legoUrl} target="_blank" rel="noopener noreferrer"
-              className="bg-gray-800 rounded-xl p-4 hover:bg-gray-700 transition block">
-              <p className="text-xs text-gray-400 mb-1">Official LEGO</p>
-              <p className="font-semibold">LEGO.com ↗</p>
-            </a>
-            <a href={bricklinkUrl} target="_blank" rel="noopener noreferrer"
-              className="bg-gray-800 rounded-xl p-4 hover:bg-gray-700 transition block">
-              <p className="text-xs text-gray-400 mb-1">Used (Bricklink)</p>
-              <p className="font-semibold">Price Guide ↗</p>
-            </a>
-          </div>
-        </section>
+        {set.num_parts > 0 && (() => {
+          const retail = Math.round(set.num_parts * 0.10 / 5) * 5;
+          const clone  = Math.round(set.num_parts * 0.025 / 5) * 5;
+          const saving = retail - clone;
+          const pct    = Math.round((saving / retail) * 100);
+          return (
+            <section className="mb-8">
+              <h2 className="text-xs uppercase tracking-widest text-gray-500 mb-3">Price Comparison</h2>
+              {/* Summary bar */}
+              <div className="bg-gray-800 rounded-xl p-4 mb-3 flex items-center gap-4">
+                <div className="flex-1">
+                  <p className="text-xs text-gray-400 mb-1">LEGO® retail (est.)</p>
+                  <p className="text-2xl font-black text-white">${retail}</p>
+                </div>
+                <div className="text-gray-600 text-2xl">→</div>
+                <div className="flex-1">
+                  <p className="text-xs text-gray-400 mb-1">Compatible clone (est.)</p>
+                  <p className="text-2xl font-black text-green-400">${clone}</p>
+                </div>
+                <div className="bg-green-500/10 border border-green-500/30 rounded-lg px-3 py-2 text-center flex-shrink-0">
+                  <p className="text-green-400 font-black text-lg">-{pct}%</p>
+                  <p className="text-green-500/70 text-xs">save ~${saving}</p>
+                </div>
+              </div>
+              {/* External links */}
+              <div className="grid grid-cols-2 gap-3">
+                <a href={legoUrl} target="_blank" rel="noopener noreferrer"
+                  className="bg-gray-800 rounded-xl p-3 hover:bg-gray-700 transition block">
+                  <p className="text-xs text-gray-400 mb-1">Official LEGO®</p>
+                  <p className="text-sm font-semibold">LEGO.com ↗</p>
+                </a>
+                <a href={bricklinkUrl} target="_blank" rel="noopener noreferrer"
+                  className="bg-gray-800 rounded-xl p-3 hover:bg-gray-700 transition block">
+                  <p className="text-xs text-gray-400 mb-1">Used (Bricklink)</p>
+                  <p className="text-sm font-semibold">Price Guide ↗</p>
+                </a>
+              </div>
+              <p className="text-xs text-gray-700 mt-2 text-center">Prices estimated (~$0.10/piece for LEGO®)</p>
+            </section>
+          );
+        })()}
 
         {/* Clones */}
         <section className="mb-8">

@@ -184,6 +184,12 @@ export default function SearchPage() {
                       <p className="text-xs text-gray-500 mt-1">
                         {set.year}{set.num_parts > 0 && ` · ${set.num_parts.toLocaleString()} pcs`}
                       </p>
+                      {set.num_parts > 0 && (
+                        <div className="flex gap-2 mt-1.5">
+                          <span className="text-xs text-gray-400">~${Math.round(set.num_parts * 0.10 / 5) * 5}</span>
+                          <span className="text-xs text-green-400">clone ~${Math.round(set.num_parts * 0.025 / 5) * 5}</span>
+                        </div>
+                      )}
                     </div>
                     <span className="text-gray-700 group-hover:text-yellow-400 transition flex-shrink-0 text-xl">›</span>
                   </Link>

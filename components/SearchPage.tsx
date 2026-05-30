@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Logo from "@/components/Logo";
 
 type LegoSet = {
   set_num: string;
@@ -52,15 +53,18 @@ export default function SearchPage() {
           <div className="relative z-10 flex flex-col items-center text-center max-w-lg w-full">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 border border-yellow-400/30 bg-yellow-400/5 rounded-full px-4 py-1.5 mb-8 text-yellow-400 text-sm font-medium">
-              🧱 Find clones. Save up to 90%.
+              Find clones. Save up to 90%.
             </div>
 
             {/* Heading */}
-            <h1 className="text-6xl sm:text-7xl font-black tracking-tight leading-none mb-4">
-              <span className="text-white">Ali</span>
-              <span className="text-yellow-400"> vs </span>
-              <span className="text-white">LEGO</span>
-            </h1>
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <Logo size={64} />
+              <h1 className="text-5xl sm:text-6xl font-black tracking-tight leading-none">
+                <span className="text-white">Ali</span>
+                <span className="text-yellow-400"> vs </span>
+                <span className="text-white">LEGO</span>
+              </h1>
+            </div>
             <p className="text-gray-400 text-base mb-10 max-w-sm leading-relaxed">
               Search any LEGO set — see if a quality clone exists on AliExpress or Temu for a fraction of the price.
             </p>

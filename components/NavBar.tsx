@@ -3,22 +3,26 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCollection } from "@/hooks/useCollection";
+import Logo from "@/components/Logo";
 
 export default function NavBar() {
   const { collection } = useCollection();
   const pathname = usePathname();
   const isHome = pathname === "/";
 
+  const brand = (
+    <span className="flex items-center gap-2.5 font-black text-white tracking-tight">
+      <Logo size={26} />
+      <span>
+        Ali <span className="text-yellow-400">vs</span> LEGO
+      </span>
+    </span>
+  );
+
   return (
-    <nav className="border-b border-gray-800/60 bg-gray-950/80 backdrop-blur-sm sticky top-0 z-10">
+    <nav className="border-b border-gray-800/60 bg-[#0a0a0a]/90 backdrop-blur-sm sticky top-0 z-10">
       <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
-        {isHome ? (
-          <span className="font-black text-white tracking-tight">🧱 Ali vs LEGO</span>
-        ) : (
-          <Link href="/" className="font-black text-white tracking-tight hover:text-yellow-400 transition">
-            🧱 Ali vs LEGO
-          </Link>
-        )}
+        {isHome ? brand : <Link href="/" className="hover:opacity-80 transition">{brand}</Link>}
         <Link
           href="/collection"
           className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition"

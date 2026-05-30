@@ -88,30 +88,32 @@ export default async function SetPage({
   const temuFallbackUrl = `https://www.temu.com/search_result.html?search_key=${encodeURIComponent(genericTerm)}&sort_type=3`;
 
   return (
-    <main className="min-h-screen bg-gray-950 text-white">
+    <main className="min-h-screen bg-[#0a0a0a] text-white">
       <div className="max-w-2xl mx-auto px-4 py-10">
         <Link href="/" className="text-sm text-gray-400 hover:text-white mb-6 inline-block">
           ← Back to search
         </Link>
 
         {/* Header */}
-        <div className="flex gap-6 items-start mb-8">
-          <div className="w-36 h-36 flex-shrink-0 bg-gray-800 rounded-xl overflow-hidden">
-            {set.set_img_url ? (
-              <Image src={set.set_img_url} alt={set.name} width={144} height={144}
-                className="object-contain w-full h-full p-2" unoptimized />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-4xl">🧱</div>
-            )}
-          </div>
-          <div className="flex-1">
-            <p className="text-yellow-400 font-mono text-sm mb-1">{set.set_num}</p>
-            <h1 className="text-2xl font-bold leading-tight mb-3">{set.name}</h1>
-            <div className="flex flex-wrap gap-3 text-sm text-gray-400">
-              <span>{set.year}</span>
-              <span>·</span>
-              <span>{set.num_parts.toLocaleString()} parts</span>
-              {theme && <><span>·</span><span>{theme.name}</span></>}
+        <div className="relative rounded-2xl overflow-hidden mb-8 bg-gray-900 border border-gray-800">
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 via-transparent to-transparent pointer-events-none" />
+          <div className="relative flex gap-5 p-5 items-center">
+            <div className="w-28 h-28 flex-shrink-0 bg-gray-800 rounded-xl overflow-hidden ring-1 ring-white/5">
+              {set.set_img_url ? (
+                <Image src={set.set_img_url} alt={set.name} width={112} height={112}
+                  className="object-contain w-full h-full p-2" unoptimized />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-4xl">🧱</div>
+              )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-yellow-400/70 font-mono text-xs mb-1">{set.set_num}</p>
+              <h1 className="text-xl sm:text-2xl font-black leading-tight mb-2 text-white">{set.name}</h1>
+              <div className="flex flex-wrap gap-2">
+                <span className="text-xs bg-gray-800 text-gray-300 px-2.5 py-1 rounded-full">{set.year}</span>
+                <span className="text-xs bg-gray-800 text-gray-300 px-2.5 py-1 rounded-full">{set.num_parts.toLocaleString()} pcs</span>
+                {theme && <span className="text-xs bg-gray-800 text-gray-300 px-2.5 py-1 rounded-full">{theme.name}</span>}
+              </div>
             </div>
           </div>
         </div>

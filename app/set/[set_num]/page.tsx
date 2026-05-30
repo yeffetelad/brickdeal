@@ -37,6 +37,7 @@ async function fetchTheme(themeId: number): Promise<Theme | null> {
 }
 
 async function fetchClones(setNum: string): Promise<Clone[]> {
+  if (!supabase) return [];
   const { data } = await supabase
     .from("clones")
     .select("*")

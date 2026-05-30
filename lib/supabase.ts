@@ -1,10 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_ANON_KEY!;
-
-export const supabase = createClient(supabaseUrl, supabaseKey);
-
 export type Clone = {
   id: number;
   set_num: string;
@@ -14,3 +9,8 @@ export type Clone = {
   ali_url: string;
   notes: string | null;
 };
+
+const url = process.env.SUPABASE_URL;
+const key = process.env.SUPABASE_ANON_KEY;
+
+export const supabase = url && key ? createClient(url, key) : null;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/components/Logo";
@@ -38,6 +38,8 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [stats, setStats] = useState<Stats>(null);
+  const [imgSearching, setImgSearching] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch("/api/stats")
@@ -62,6 +64,35 @@ export default function SearchPage() {
     doSearch(query);
   }
 
+  async function handleImageSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setImgSearching(true);
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const res = await fetch('/api/imgsearch', { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (data.searchUrl) {
+        window.open(data.searchUrl, '_blank');
+      } else if (data.fallback && data.dataUrl) {
+        // Fallback: open Google Lens
+        window.open('https://lens.google.com/', '_blank');
+      } else {
+        alert('Image search is unavailable. Please try a text search.');
+      }
+    } catch {
+      alert('Image search failed. Please try again.');
+    } finally {
+      setImgSearching(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  }
+
   return (
     <div className="flex-1 flex flex-col">
       {!searched ? (
@@ -79,7 +110,6 @@ export default function SearchPage() {
               Search any LEGO® set — find compatible brick alternatives on AliExpress & Temu for up to 90% less.
             </p>
 
-            {/* Live stats */}
             {stats && (
               <div className="flex gap-6 mb-8 mt-1">
                 <div className="text-center">
@@ -94,7 +124,7 @@ export default function SearchPage() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="w-full flex gap-2 mb-6">
+            <form onSubmit={handleSubmit} className="w-full flex gap-2 mb-3">
               <input
                 type="text"
                 value={query}
@@ -112,6 +142,29 @@ export default function SearchPage() {
               </button>
             </form>
 
+            {/* Image search button */}
+            <div className="w-full mb-6">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onChange={handleImageSearch}
+                className="hidden"
+                id="img-search-input"
+              />
+              <label
+                htmlFor="img-search-input"
+                className={`flex items-center justify-center gap-2 w-full border border-gray-700 hover:border-yellow-400/50 bg-gray-900 hover:bg-yellow-400/5 rounded-2xl py-3 text-sm text-gray-400 hover:text-yellow-400 transition cursor-pointer ${imgSearching ? 'opacity-50 pointer-events-none' : ''}`}
+              >
+                {imgSearching ? (
+                  <><span className="animate-spin">⏳</span> Searching by image…</>
+                ) : (
+                  <><span>📷</span> Search by photo</>
+                )}
+              </label>
+            </div>
+
             <div className="flex gap-2 flex-wrap justify-center">
               {QUICK_SEARCHES.map((s) => (
                 <button
@@ -127,7 +180,7 @@ export default function SearchPage() {
         </div>
       ) : (
         <div className="max-w-3xl mx-auto w-full px-4 py-8">
-          <form onSubmit={handleSubmit} className="flex gap-2 mb-8">
+          <form onSubmit={handleSubmit} className="flex gap-2 mb-3">
             <input
               type="text"
               value={query}
@@ -140,6 +193,29 @@ export default function SearchPage() {
               {loading ? "…" : "Search"}
             </button>
           </form>
+
+          {/* Image search in results view */}
+          <div className="mb-6">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleImageSearch}
+              className="hidden"
+              id="img-search-input-2"
+            />
+            <label
+              htmlFor="img-search-input-2"
+              className={`flex items-center justify-center gap-2 w-full border border-gray-700 hover:border-yellow-400/50 bg-gray-900 hover:bg-yellow-400/5 rounded-xl py-2.5 text-sm text-gray-400 hover:text-yellow-400 transition cursor-pointer ${imgSearching ? 'opacity-50 pointer-events-none' : ''}`}
+            >
+              {imgSearching ? (
+                <><span className="animate-spin">⏳</span> Searching by image…</>
+              ) : (
+                <><span>📷</span> Search by photo</>
+              )}
+            </label>
+          </div>
 
           {loading && (
             <div className="grid sm:grid-cols-2 gap-3">

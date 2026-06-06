@@ -207,16 +207,25 @@ export default async function SetPage({
 
         {/* Fallback */}
         <div className="border-t border-gray-800 pt-6">
-          <p className="text-xs text-gray-500 mb-3 text-center">Search both platforms directly</p>
-          <div className="grid grid-cols-2 gap-3">
-            <a href={aliFallbackUrl} target="_blank" rel="noopener noreferrer sponsored"
-              className="flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 rounded-xl transition text-sm">
-              🛍 AliExpress
-            </a>
-            <a href={temuFallbackUrl} target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 rounded-xl transition text-sm">
-              🔴 Temu
-            </a>
+          <p className="text-xs text-gray-500 mb-3 text-center">Search directly on each platform</p>
+          <div className="flex flex-col gap-2">
+            {set.set_img_url && (
+              <a href={`https://www.aliexpress.com/wholesale?imgUrl=${encodeURIComponent(set.set_img_url)}&SearchText=`}
+                target="_blank" rel="noopener noreferrer sponsored"
+                className="flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-semibold py-3 rounded-xl transition text-sm">
+                🔍 Search by image on AliExpress
+              </a>
+            )}
+            <div className="grid grid-cols-2 gap-2">
+              <a href={aliFallbackUrl} target="_blank" rel="noopener noreferrer sponsored"
+                className="flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 rounded-xl transition text-sm">
+                🛍 AliExpress text
+              </a>
+              <a href={temuFallbackUrl} target="_blank" rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 rounded-xl transition text-sm">
+                🔴 Temu
+              </a>
+            </div>
           </div>
         </div>
       </div>

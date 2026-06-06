@@ -46,8 +46,8 @@ async function fetchClones(setNum: string): Promise<Clone[]> {
   return data ?? [];
 }
 
-function temuSearchUrl(clone: Clone) {
-  const term = clone.model_num ? `${clone.brand} ${clone.model_num}` : clone.brand;
+function temuSearchUrl(setName: string) {
+  const term = `${setName} building blocks`;
   return `https://www.temu.com/search_result.html?search_key=${encodeURIComponent(term)}&sort_type=3`;
 }
 
@@ -85,7 +85,7 @@ export default async function SetPage({
   const aliFallbackUrl = withAffiliate(
     `https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(genericTerm)}&sortType=total_tranpro_desc&FilterMinRating=4`
   );
-  const temuFallbackUrl = `https://www.temu.com/search_result.html?search_key=${encodeURIComponent(genericTerm)}&sort_type=3`;
+  const temuFallbackUrl = temuSearchUrl(set.name);
 
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white">
@@ -200,7 +200,7 @@ export default async function SetPage({
                       className="flex items-center justify-center gap-1.5 bg-orange-500 hover:bg-orange-400 text-white text-sm font-semibold py-2.5 rounded-lg transition">
                       🛍 AliExpress
                     </a>
-                    <a href={temuSearchUrl(clone)} target="_blank" rel="noopener noreferrer"
+                    <a href={temuSearchUrl(set.name)} target="_blank" rel="noopener noreferrer"
                       className="flex items-center justify-center gap-1.5 bg-[#e02020] hover:bg-[#c51010] text-white text-sm font-semibold py-2.5 rounded-lg transition">
                       🔴 Temu
                     </a>

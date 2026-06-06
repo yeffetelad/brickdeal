@@ -194,17 +194,11 @@ export default async function SetPage({
                     )}
                     <div className="mt-1"><Stars rating={clone.quality_rating} /></div>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <a href={withAffiliate(clone.ali_url)} target="_blank"
-                      rel="noopener noreferrer sponsored"
-                      className="flex items-center justify-center gap-1.5 bg-orange-500 hover:bg-orange-400 text-white text-sm font-semibold py-2.5 rounded-lg transition">
-                      🛍 AliExpress
-                    </a>
-                    <a href={temuSearchUrl(set.name)} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-1.5 bg-[#e02020] hover:bg-[#c51010] text-white text-sm font-semibold py-2.5 rounded-lg transition">
-                      🔴 Temu
-                    </a>
-                  </div>
+                  <a href={withAffiliate(clone.ali_url)} target="_blank"
+                    rel="noopener noreferrer sponsored"
+                    className="flex items-center justify-center gap-1.5 bg-orange-500 hover:bg-orange-400 text-white text-sm font-semibold py-2.5 rounded-lg transition w-full">
+                    🛍 Find on AliExpress
+                  </a>
                 </div>
               ))}
             </div>

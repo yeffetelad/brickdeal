@@ -8,9 +8,10 @@ const THEME_ICONS: Record<string, string> = {
   'Icons': '🏛️',
   'Architecture': '🌆',
   'Ideas': '💡',
+  'Modular': '🏙️',
 };
 
-const THEME_ORDER = ['Star Wars', 'Technic', 'Icons', 'Architecture', 'Ideas'];
+const THEME_ORDER = ['Star Wars', 'Technic', 'Icons', 'Modular', 'Architecture', 'Ideas'];
 
 async function fetchSetDetails(set_num: string) {
   const key = process.env.REBRICKABLE_API_KEY;

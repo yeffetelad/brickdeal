@@ -49,3 +49,26 @@ insert into clones (set_num, brand, model_num, quality_rating, ali_url, theme, n
 
 -- Ideas / Space
 ('21309-1', 'KING',       '80013',  4, 'https://s.click.aliexpress.com/e/_c3tVWWi9', 'Ideas', null);
+
+-- Round 4 additions — 2026-06-06
+-- Star Wars
+-- ('75244-1', 'Mould King', '21003', 4, 'https://s.click.aliexpress.com/e/_c3nm64hT', 'Star Wars', '2,905 pcs, Corellian Corvette'),
+-- ('75331-1', 'Mould King', '21023', 4, 'https://s.click.aliexpress.com/e/_c3xrTc3R', 'Star Wars', '5,018 pcs UCS Razor Crest'),
+-- ('75179-1', 'Mould King', '21025', 4, 'https://s.click.aliexpress.com/e/_c3aXgphn', 'Star Wars', '3,758 pcs UCS TIE Silencer'),
+-- ('75367-1', 'Mould King', '21005', 4, 'https://s.click.aliexpress.com/e/_c3spHChx', 'Star Wars', '6,685 pcs, motorized RC'),
+-- ('75356-1', 'Mould King', '13134', 4, 'https://s.click.aliexpress.com/e/_c4kjER8N', 'Star Wars', '7,788 pcs Executor-class'),
+-- Technic
+-- ('42055-1', 'Mould King', '17006', 4, 'https://s.click.aliexpress.com/e/_c3TkWBW1', 'Technic', '4,588 pcs, RC app-controlled'),
+-- ('42082-1', 'Mould King', '17007', 4, 'https://s.click.aliexpress.com/e/_c3OAOHmv', 'Technic', '8,506 pcs Liebherr LTM 11200, RC'),
+-- ('42043-1', 'Mould King', '19007', 4, 'https://s.click.aliexpress.com/e/_c3sN2nKt', 'Technic', '2,819 pcs, motorized pneumatic crane'),
+-- ('42125-1', 'Cada',       'C61042', 5, 'https://s.click.aliexpress.com/e/_c3cN1U6N', 'Technic', '3,187 pcs, 1:8 scale RC'),
+-- Icons
+-- ('10295-1', 'KING',       '68001',  3, 'https://s.click.aliexpress.com/e/_c3nhwi8p', 'Icons', '1,458 pcs Porsche 911'),
+-- ('10261-1', 'Mould King', '11014',  4, 'https://s.click.aliexpress.com/e/_c4Lf9cnB', 'Icons', '3,646 pcs motorized roller coaster'),
+-- Modular
+-- ('10190-1', 'Mould King', '16020',  4, 'https://s.click.aliexpress.com/e/_c3WhkKfX', 'Modular', '3,016 pcs, LED lighting'),
+-- ('10251-1', 'JieStar',    '89102',  4, 'https://s.click.aliexpress.com/e/_c3hyhfG5', 'Modular', '2,835 pcs'),
+-- ('10243-1', 'Mould King', '16005',  4, 'https://s.click.aliexpress.com/e/_c31EZSPP', 'Modular', '3,050 pcs, 3 modules, LED'),
+-- ('10246-1', 'JieStar',    '89110',  4, 'https://s.click.aliexpress.com/e/_c3Tsbmmz', 'Modular', '3,412 pcs'),
+-- Ideas
+-- ('21335-1', 'Mould King', '11022',  4, 'https://s.click.aliexpress.com/e/_c4khjehj', 'Ideas', '2,065 pcs, RC + LED');
